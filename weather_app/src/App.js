@@ -3,6 +3,8 @@ import { AppLayout } from "./Components/AppLayout"
 import './App.css';
 import { Route } from 'react-router-dom';
 import HomePage from './Pages/home/HomePage';
+import FavoritesPage from './Pages/favorite/FavoritesPage';
+
 function App() {
   return (
     <AppLayout>
@@ -12,7 +14,7 @@ function App() {
       />
        <Route 
       path="/favorites"
-      component = {HomePage}
+      component = {FavoritesPage}
       />
     </AppLayout>
   );
