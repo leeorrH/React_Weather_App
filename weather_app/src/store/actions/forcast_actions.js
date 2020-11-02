@@ -5,37 +5,48 @@ const API_KEY = 'MGXBvA6P382vGZRSypWwdhBCjJFllTnG';
 const baseUrl = "http://dataservice.accuweather.com/";
 
 
-export const setWeather = (weather) => {
+export const setWeatherDay = (weatherDay) => {
     return {
-        type: actionTypes.SET_WETHEAR_DATA,
-        weatherForcast: weather
+        type: actionTypes.SET_WETHEAR_DATA_DAY,
+        weatherForcastDay: weatherDay
     }
 }
-export const getCityCode = (cityName) => {
+
+export const setWeatherWeek = (weatherWeek) => {
+    return {
+        type: actionTypes.SET_WETHEAR_DATA_WEEK,
+        weatherForcastWeek: weatherWeek
+    }
+}
+
+export const weatherData = (cityName) => {
     return dispatch => {
         const url = "locations/v1/cities/autocomplete?apikey=" + API_KEY + "&q=" + cityName;
         axios.get(baseUrl + url).then(response => {
-            dispatch(setWeather(response.data)); // .find(city => city.AdministrativeArea === cityName);
+          
+            let locationKey = response?.data?.find(city => city.AdministrativeArea.LocalizedName.toLowerCase() === cityName).Key;
+            dispatch(getCurrentDayForcast(locationKey));
+            dispatch(getWeeklyForcast(locationKey));
         });
     }
 }
 
 export const getCurrentDayForcast = (locationKey) => {
-    let result = {};
-    const url = "currentconditions/v1/" + locationKey + "?apikey=" + API_KEY;
-    axios.get(baseUrl + url).then(response => {
-        result = response.data;
-    });
-    return result;
+    return dispatch => {
+        const url = "currentconditions/v1/" + locationKey + "?apikey=" + API_KEY;
+        axios.get(baseUrl + url).then(response => {
+            dispatch(setWeatherDay(response.data));
+        });
+    }
 }
 
 export const getWeeklyForcast = (locationKey) => {
-    let result = {};
-    const url = "forecasts/v1/daily/5day/" + locationKey + "?apikey=" + API_KEY;
-    axios.get(baseUrl + url).then(response => {
-        result = response.data;
-    });
-    return result;
+    return dispatch => {
+        const url = "forecasts/v1/daily/5day/" + locationKey + "?apikey=" + API_KEY;
+        axios.get(baseUrl + url).then(response => {
+            dispatch(setWeatherWeek(response.data));
+        });
+    }
 }
 
 // 1)input => getCityCode for get the new cities array 

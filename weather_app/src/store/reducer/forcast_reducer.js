@@ -3,19 +3,24 @@ import * as actionTypes from '../actions/actionTypes'
 const initialState = {
     weatherForcast: undefined,
 }
-// add payload - data to pass 
-// add asyc init 
+
 // add redux to  FC 
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.SET_WETHEAR_DATA:
+        case actionTypes.SET_WETHEAR_DATA_DAY:
             return {
                 ...state,
-                weatherForcast: action.weatherForcast
+                weatherForcastDay: action.weatherForcastDay
+            }
+        case actionTypes.SET_WETHEAR_DATA_WEEK:
+            return {
+                ...state,
+                weatherForcastWeek: action.weatherForcastWeek
             }
 
-            default:
-                return state
+
+        default:
+            return state
     }
 }
 
