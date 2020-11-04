@@ -23,8 +23,7 @@ export const weatherData = (cityName) => {
     return dispatch => {
         const url = "locations/v1/cities/autocomplete?apikey=" + API_KEY + "&q=" + cityName;
         axios.get(baseUrl + url).then(response => {
-          
-            let locationKey = response?.data?.find(city => city.AdministrativeArea.LocalizedName.toLowerCase() === cityName).Key;
+            let locationKey = response?.data?.find(city => city.AdministrativeArea.LocalizedName.toLowerCase() === cityName.toLowerCase()).Key;
             dispatch(getCurrentDayForcast(locationKey));
             dispatch(getWeeklyForcast(locationKey));
         });

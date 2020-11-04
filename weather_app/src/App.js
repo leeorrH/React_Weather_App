@@ -21,14 +21,14 @@ function App() {
   });
 
   useEffect(() => {
-    onInitWeather("haifa");
+    onInitWeather("Tel Aviv");
   }, [onInitWeather])
 
-  // useEffect(()=> {
-  //   console.log(weatherDay)
-  // },[weatherDay])
+  useEffect(()=> {
+    console.log(weatherDay)
+  },[weatherDay])
 
-  //const cityCode = weather?.find(cityWeather => cityWeather.AdministrativeArea.LocalizedName.toLowerCase() === "haifa"); 
+  
 
   return (
     <AppLayout>
