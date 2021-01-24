@@ -17,6 +17,11 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 weatherForcastWeek: action.weatherForcastWeek
             }
+        case actionTypes.SET_CITY_NAME : 
+            return {
+                ...state,
+                cityName : action.cityName
+            }
 
 
         default:

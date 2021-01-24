@@ -19,6 +19,13 @@ export const setWeatherWeek = (weatherWeek) => {
     }
 }
 
+export const setCityName = (cityName) => {
+    return {
+        type: actionTypes.SET_CITY_NAME,
+        cityName : cityName
+    }
+}
+
 export const weatherData = (cityName) => {
     return dispatch => {
         const url = "locations/v1/cities/autocomplete?apikey=" + API_KEY + "&q=" + cityName;
@@ -26,13 +33,15 @@ export const weatherData = (cityName) => {
             let locationKey = response?.data?.find(city => city.AdministrativeArea.LocalizedName.toLowerCase() === cityName.toLowerCase()).Key;
             dispatch(getCurrentDayForcast(locationKey));
             dispatch(getWeeklyForcast(locationKey));
+            dispatch(setCityName(cityName));
         });
     }
 }
 
 export const getCurrentDayForcast = (locationKey) => {
     return dispatch => {
-        const url = "currentconditions/v1/" + locationKey + "?apikey=" + API_KEY;
+        //const url = "currentconditions/v1/" + locationKey + "?apikey=" + API_KEY;
+        const url = "forecasts/v1/daily/1day/" + locationKey + "?apikey=" + API_KEY;
         axios.get(baseUrl + url).then(response => {
             dispatch(setWeatherDay(response.data));
         });

@@ -26,7 +26,7 @@ function App() {
 
   useEffect(()=> {
     console.log(weatherDay)
-  },[weatherDay])
+  },[weatherDay,weatherWeek])
 
   
 
